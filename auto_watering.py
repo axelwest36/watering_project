@@ -14,10 +14,10 @@ def main():
         except:
             print(f'Port {i} is unsuitable')
 
-    def give_water():
-        gpio.output(16, 0)
+    def give_water(pin=16):
+        gpio.output(pin, 0)
         time.sleep(1)
-        gpio.output(16, 1)
+        gpio.output(pin, 1)
 
     elapsed = 0
     start = time.time()
