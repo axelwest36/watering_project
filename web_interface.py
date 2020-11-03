@@ -32,7 +32,10 @@ def is_reservoir_empty():
     if status == False:
         message = "Water reservoir should still be sufficiently full"
     if status == True:
-        message = "Water reservoir is empty, please refill it (and be careful with the wiring :)"
+        message = """
+            Something might be wrong with the calibration of the sensor, or the water reservoir might be empty. 
+            Either refill the reservoir (and be careful with the wiring :), or contact Axel.
+            """
     templateData = template(text=message)
     return render_template('index.html', **templateData)
 
@@ -52,7 +55,7 @@ def water_plant():
 @app.route('/update_moisture_threshold', methods=['POST', 'GET'])
 def update_moisture_threshold():
     threshold = request.form.get("moisture threshold")
-    watering_functions.set_moisture_threshold(threshold)
+    watering_functions.set_moisture_threshold(level=threshold)
     templateData = template(text=f"Moisture threshold has been updated to {threshold}")
     return render_template('index.html', **templateData)
 

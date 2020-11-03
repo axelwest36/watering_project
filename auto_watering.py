@@ -22,7 +22,10 @@ def main():
         print(line)
         value = float(line[-6:-2])
         elapsed = time.time() - start
-        if value > 725 & elapsed > 50: # Higher value means less moisture
+        threshold = watering_functions.get_moisture_threshold()
+        if elapsed > 30:
+            watering_functions.extract_moisture_level(port)
+        if value > threshold & elapsed > 50: # Higher value means less moisture
             watering_functions.give_water()
             elapsed = 0
             start = time.time()
