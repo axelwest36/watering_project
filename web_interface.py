@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for, request, redirect
 from datetime import datetime
-import auto_watering
+import watering_functions
 import os
 
 # Initializes flask based on the name of the file
@@ -23,7 +23,7 @@ def index():
 @app.route('/last_watered')
 def check_last_watered():
     last_watered = watering_functions.get_last_watered()
-    templateData = template(text=f'Last watered at: {last_watered}')
+    templateData = template(text=last_watered)
     return render_template('index.html', **templateData)
 
 @app.route('/reservoir_empty')
@@ -59,7 +59,7 @@ def update_moisture_threshold():
 @app.route('/system_shutdown/<toggle>')
 def watering_system_shutdown(toggle):
     if toggle == "ON":
-        print('Watering system will be powered off. To restart, pull the micro USB cable out of the Pi out and plug it back in after a few seconds.')
+        print('Watering system will be powered off. To restart, pull the micro USB cable out of the Raspberry Pi and plug it back in after a few seconds.')
         os.system('pkill -f auto_watering.py') # filename might need to be changed
     else:
         pass
