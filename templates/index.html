@@ -35,7 +35,7 @@
       <a href="/last_watered"><button>Check last water time</button></a> <br>
       <a href="/reservoir_empty"><button>Check reservoir</button></a> <br>
       <a href="/system_shutdown"><button>Shutdown watering system</button></a> <br><br><br>
-      <form action="/update_moisture_threshold" id="moisture_form">
+      <form action="/update_moisture_threshold" method="get" id="moisture_form">
           <label for="moisture_threshold">Desired moisture threshold:</label><br>
           <input type="text" id="moisture_threshold" name="moisture_threshold"><br>
           <input type="submit" value="Update moisture threshold"><br>
