@@ -29,7 +29,7 @@ def check_reservoir_empty():
             pass
     return empty
 
-def extract_moisture_level(port):
+def get_moisture_level_from_sensor(port):
     try:
         line = port.readline()
         value = float(line[-6:-2])
@@ -39,8 +39,15 @@ def extract_moisture_level(port):
         print('Failed to extract moisture level from sensor')
         pass
 
-def get_moisture_level():
-    pass
+def get_moisture_level_from_log():
+    try:
+        file = open('/home/pi/latest_moisture_level.txt', 'r')
+        moisture_level = float(file.readlines()[-1][-4:])
+        file.close()
+        return moisture_level
+    except:
+        print("Failed to extract moisture level from log")
+        pass
 
 def set_moisture_threshold(level=725):
     with open('/home/pi/moisture_threshold.txt', 'w+') as file:

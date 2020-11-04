@@ -41,8 +41,8 @@ def is_reservoir_empty():
 
 @app.route('/moisture_level')
 def check_moisture_level():
-    moisture_level = watering_functions.get_moisture_level()
-    templateData = template(text=f'Moisture level is currently at: {moisture_level}')
+    moisture_level = watering_functions.get_moisture_level_from_log()
+    templateData = template(text=f'Last measured moisture level was: {moisture_level}')
     return render_template('index.html', **templateData)
 
 @app.route('/water_plant')
