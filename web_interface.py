@@ -54,7 +54,7 @@ def water_plant():
 
 @app.route('/update_moisture_threshold', methods=['POST','GET'])
 def update_moisture_threshold():
-    if request.method == "POST":
+    if request.method == "POST" or request.method=="GET":
         form_value = request.form["moisture_threshold"]
         threshold = float(form_value)
         watering_functions.set_moisture_threshold(level=threshold)
