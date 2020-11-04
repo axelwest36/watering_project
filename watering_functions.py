@@ -52,7 +52,7 @@ def get_moisture_level_from_sensor(port):
 def get_moisture_level_from_log():
     try:
         file = open('/home/pi/latest_moisture_level.txt', 'r')
-        moisture_level = float(file.readlines()[-1][-4:])
+        moisture_level = float(file.readlines()[-1][-8:-2])
         file.close()
         return moisture_level
     except:
