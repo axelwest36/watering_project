@@ -22,7 +22,10 @@ def main():
         print(line)
         value = float(line[-6:-2])
         elapsed = time.time() - start
-        threshold = watering_functions.get_moisture_threshold()
+        try:
+            threshold = watering_functions.get_moisture_threshold()
+        except FileNotFoundError:
+            pass
         if elapsed%30 == 0:
             watering_functions.get_moisture_level_from_sensor(port)
         if value > threshold & elapsed > 50: # Higher value means less moisture
