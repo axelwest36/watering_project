@@ -54,9 +54,10 @@ def water_plant():
 
 @app.route('/update_moisture_threshold', methods=['POST','GET'])
 def update_moisture_threshold():
-    threshold = request.form.get("moisture_threshold")
-    watering_functions.set_moisture_threshold(level=threshold)
-    templateData = template(text=f"Moisture threshold has been updated to {threshold}")
+    if request.method == "POST":
+        threshold = request.form.get("moisture_threshold")
+        watering_functions.set_moisture_threshold(level=threshold)
+        templateData = template(text=f"Moisture threshold has been updated to {threshold}")
     return render_template('index.html', **templateData)
 
 @app.route('/system_shutdown')
