@@ -5,7 +5,6 @@ import os
 import watering_functions
 
 def main():
-    gpio.setmode(gpio.BOARD)
     watering_functions.init_output(16)
 
     for i in range(0,10):

@@ -6,9 +6,9 @@ from datetime import datetime
 import time
 import serial
 
-gpio.setmode(gpio.BOARD)
 
 def init_output(pin):
+    gpio.setmode(gpio.BOARD)
     gpio.setup(pin, gpio.OUT, initial=gpio.HIGH)
 
 def give_water(pin=16):
