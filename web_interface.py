@@ -59,13 +59,13 @@ def update_moisture_threshold():
     templateData = template(text=f"Moisture threshold has been updated to {threshold}")
     return render_template('index.html', **templateData)
 
-@app.route('/system_shutdown/<toggle>')
-def watering_system_shutdown(toggle):
-    if toggle == "ON":
-        print('Watering system will be powered off. To restart, pull the micro USB cable out of the Raspberry Pi and plug it back in after a few seconds.')
-        os.system('pkill -f auto_watering.py') # filename might need to be changed
-    else:
-        pass
+@app.route('/system_shutdown')
+def watering_system_shutdown():
+    message = """Watering system will be powered off. To restart, pull the micro USB cable out 
+    of the Raspberry Pi and plug it back in after a few seconds."""
+    templateData = template(text=message)
+    os.system('pkill -f auto_watering.py')
+    return render_template('index.html', **templateData)
     
 
 if __name__ == "__main__":

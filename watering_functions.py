@@ -1,4 +1,7 @@
-import RPi.GPIO as gpio
+try: # Try statement is used for testing web server on Macbook, on which the RPi.GPIO library can't be installed
+    import RPi.GPIO as gpio
+except:
+    pass
 from datetime import datetime
 import time
 import serial
