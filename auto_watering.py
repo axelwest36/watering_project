@@ -25,7 +25,7 @@ def main():
         try:
             threshold = watering_functions.get_moisture_threshold()
         except FileNotFoundError:
-            threshold = 725
+            watering_functions.set_moisture_threshold()
         if elapsed%30 == 0:
             watering_functions.get_moisture_level_from_sensor(port)
         if value > threshold and elapsed > 50: # Higher value means less moisture

@@ -17,7 +17,7 @@ def give_water(pin=16):
     time.sleep(1)
     gpio.output(pin, 1)
     with open('/home/pi/last_watered_log.txt', 'a') as file:
-            file.write(f'Last watered on: {datetime.now().strftime("%A %d %B %Y at %H:%M:%S")}')
+        file.write(f'Last watered on: {datetime.now().strftime("%A %d %B %Y at %H:%M:%S")} \n')
 
 def get_last_watered():
     file = open('/home/pi/last_watered_log.txt', 'r')
@@ -43,10 +43,11 @@ def get_moisture_level_from_sensor(port):
         line = port.readline()
         value = float(line[-6:-2])
         with open('/home/pi/latest_moisture_level.txt', 'a') as file:
-            file.write(f'{datetime.now().strftime("%A %d %B %Y at %H:%M:%S")}: {value}')
+            file.write(f'{datetime.now().strftime("%A %d %B %Y at %H:%M:%S")}: {value} \n')
     except:
         print('Failed to extract moisture level from sensor')
-        pass
+        with open('/home/pi/latest_moisture_level.txt', 'a') as file:
+            file.write('000 \n')
 
 def get_moisture_level_from_log():
     try:
@@ -63,7 +64,10 @@ def set_moisture_threshold(level=725):
         file.write(f'{level}')
 
 def get_moisture_threshold():
-    file = open('/home/pi/moisture_threshold.txt', 'r')
-    threshold = float(file.readlines()[-1])
-    file.close()
+    try:
+        file = open('/home/pi/moisture_threshold.txt', 'r')
+        threshold = float(file.readlines()[-1])
+        file.close()
+    except:
+        threshold = 725
     return threshold
