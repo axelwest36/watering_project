@@ -62,6 +62,7 @@ def get_moisture_level_from_log():
 def set_moisture_threshold(level=725):
     with open('/home/pi/moisture_threshold.txt', 'w+') as file:
         file.write(f'{level}')
+    return level
 
 def get_moisture_threshold():
     try:
