@@ -6,7 +6,13 @@ from datetime import datetime
 import time
 import serial
 
+gpio.setmode(gpio.BOARD)
+
+def init_output(pin):
+    gpio.setup(pin, gpio.OUT, initial=gpio.HIGH)
+
 def give_water(pin=16):
+    init_output(pin)
     gpio.output(pin, 0)
     time.sleep(1)
     gpio.output(pin, 1)
