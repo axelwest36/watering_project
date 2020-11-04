@@ -28,7 +28,7 @@ def main():
             threshold = 725
         if elapsed%30 == 0:
             watering_functions.get_moisture_level_from_sensor(port)
-        if value > threshold & elapsed > 50: # Higher value means less moisture
+        if value > threshold and elapsed > 50: # Higher value means less moisture
             watering_functions.give_water()
             elapsed = 0
             start = time.time()
