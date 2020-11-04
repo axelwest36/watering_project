@@ -55,7 +55,8 @@ def water_plant():
 @app.route('/update_moisture_threshold', methods=['POST','GET'])
 def update_moisture_threshold():
     if request.method == "POST":
-        threshold = request.form.get("moisture_threshold")
+        form_value = request.form["moisture_threshold"]
+        threshold = float(form_value)
         watering_functions.set_moisture_threshold(level=threshold)
         templateData = template(text=f"Moisture threshold has been updated to {threshold}")
         return render_template('index.html', **templateData)
@@ -68,7 +69,7 @@ def watering_system_shutdown():
     message = """Watering system will be powered off. To restart, pull the micro USB cable out 
     of the Raspberry Pi and plug it back in after a few seconds."""
     templateData = template(text=message)
-    os.system('pkill -f auto_watering.py')
+    os.system('sudo pkill -f auto_watering.py')
     return render_template('index.html', **templateData)
     
 
