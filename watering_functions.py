@@ -5,6 +5,8 @@ except:
 from datetime import datetime
 import time
 import serial
+import smtplib
+import ssl
 
 
 def init_output(pin):
@@ -25,6 +27,24 @@ def get_last_watered():
     file.close()
     return log[-1]
 
+def send_reminder():
+    port = 465
+    context = ssl.create_default_context()
+    sender_email = "schatjesplant@gmail.com"
+    receiver_email = "victoria.plas@icloud.com"
+
+    with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
+        server.login(sender_email, "kamwyg-8Tuwtu-zudhom")
+        message = """Subject: Plant heeft misschien dorst \n\n
+            Hallo schat, \n\n
+            Volgens mij is m'n reservoir bijna leeg. Kan je ff checken en deze bijvullen? Dankjewel! \n\n
+            Groetjes, \n
+            Je plant \n\n\n\n
+            P.S. Please voorzichtig doen met alle kabeltjes en onderdelen, behalve het draadje van de waterpomp en de waterpomp zelf
+            kan niks tegen water helaas :)
+        """
+        server.sendmail(sender_email, receiver_email, message)
+
 def check_reservoir_empty():
     empty = False
     with open('/home/pi/last_watered_log.txt', 'r') as file:
@@ -32,6 +52,7 @@ def check_reservoir_empty():
         try:
             if log[-30][-8:-6] == log[-1][-8:-6]:
                 empty = True
+                send_reminder()
             else:
                 pass
         except IndexError:

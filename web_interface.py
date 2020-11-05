@@ -71,7 +71,20 @@ def watering_system_shutdown():
     templateData = template(text=message)
     os.system('sudo pkill -f auto_watering.py')
     return render_template('index.html', **templateData)
+
+@app.route('/system_reboot')
+def watering_system_reboot():
+    message = "Watering system will be rebooted after one minute. Please wait a few seconds for it to restart."
+    templateData = template(text=message)
+    os.system('sudo shutdown -r 1')
+    return render_template('index.html', **templateData)
     
+@app.route('/send_test_email')
+def send_test():
+    watering_functions.send_reminder()
+    message = "Test email has been sent to victoria.plas@icloud.com."
+    templateData = template(text=message)
+    return render_template('index.html', **templateData)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=80, debug=True)
