@@ -80,7 +80,7 @@ def get_moisture_level_from_log():
         print("Failed to extract moisture level from log")
         pass
 
-def set_moisture_threshold(level=725):
+def set_moisture_threshold(level=525):
     with open('/home/pi/moisture_threshold.txt', 'w+') as file:
         file.write(f'{level}')
     return level
@@ -91,5 +91,5 @@ def get_moisture_threshold():
         threshold = float(file.readlines()[-1])
         file.close()
     except:
-        threshold = 725
+        threshold = 525
     return threshold
