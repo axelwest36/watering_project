@@ -4,6 +4,7 @@ import time
 import os
 import watering_functions
 import math
+import datetime
 
 def main():
     watering_functions.init_output(16)
@@ -18,6 +19,7 @@ def main():
 
     elapsed = 0
     start = time.time()
+    time_to_reboot = (4, 20, 42)
     while True:
         line = port.readline()
         print(line)
@@ -35,6 +37,10 @@ def main():
             start = time.time()
             watering_functions.check_reservoir_empty()
 
+        current_date_time = datetime.datetime.now()
+        current_time = (current_date_time.hour, current_date_time.minute, current_date_time.second)
+        if current_time == time_to_reboot:
+            os.system('sudo reboot')
 
 if __name__ == '__main__':
     try:
