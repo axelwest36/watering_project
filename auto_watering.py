@@ -33,6 +33,7 @@ def main():
             watering_functions.give_water()
             elapsed = 0
             start = time.time()
+            watering_functions.check_reservoir_empty()
 
 
 if __name__ == '__main__':
