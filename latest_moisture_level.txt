@@ -46013,3 +46013,13 @@ Friday 20 November 2020 at 12:55:06: 463.0
 Friday 20 November 2020 at 12:55:36: 462.0 
 Friday 20 November 2020 at 12:55:57: 462.0 
 Friday 20 November 2020 at 12:56:27: 462.0 
+Monday 23 November 2020 at 14:25:27: 436.0 
+Monday 23 November 2020 at 14:25:57: 436.0 
+Monday 23 November 2020 at 14:26:18: 436.0 
+Monday 23 November 2020 at 14:26:48: 435.0 
+Monday 23 November 2020 at 14:27:09: 435.0 
+Monday 23 November 2020 at 14:27:39: 435.0 
+Monday 23 November 2020 at 14:28:00: 435.0 
+Monday 23 November 2020 at 14:28:30: 435.0 
+Monday 23 November 2020 at 14:28:51: 435.0 
+Monday 23 November 2020 at 14:29:22: 435.0 
