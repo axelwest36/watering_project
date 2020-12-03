@@ -19,21 +19,22 @@ def main():
     elapsed = 0
     start = time.time()
     while True:
-        line = port.readline()
-        print(line)
-        value = float(line[-6:-2])
+#        line = port.readline()
+#        print(line)
+#        value = float(line[-6:-2])
         elapsed = time.time() - start
-        try:
-            threshold = watering_functions.get_moisture_threshold()
-        except FileNotFoundError:
-            threshold = watering_functions.set_moisture_threshold()
+#        try:
+#            threshold = watering_functions.get_moisture_threshold()
+#        except FileNotFoundError:
+#            threshold = watering_functions.set_moisture_threshold()
         if math.floor(elapsed%30) == 0:
             watering_functions.get_moisture_level_from_sensor(port)
-        if value < threshold and elapsed > 1000:
+#        if value < threshold and elapsed > 1000:
+	if elapsed > 6000:
             watering_functions.give_water()
             elapsed = 0
             start = time.time()
-            watering_functions.check_reservoir_empty()
+#            watering_functions.check_reservoir_empty()
 
 
 if __name__ == '__main__':
