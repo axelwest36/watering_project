@@ -10,7 +10,7 @@ import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn 
 
 def main():
-    watering_functions.init_output(16)
+    watering_functions.init_output(23)
 
     i2c = busio.I2C(board.SCL, board.SDA)
     ads = ADS.ADS1115(i2c)
@@ -28,7 +28,10 @@ def main():
             threshold = watering_functions.set_moisture_threshold()
         if math.floor(elapsed%30) == 0:
             watering_functions.get_moisture_level_from_sensor(chan)
-        if value < threshold and elapsed > 1000:
+
+        time.sleep(.750) # for stabilizing readings from ADC
+
+        if value > threshold and elapsed > 1000:
             watering_functions.give_water()
             elapsed = 0
             start = time.time()

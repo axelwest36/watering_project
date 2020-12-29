@@ -10,10 +10,10 @@ import ssl
 
 
 def init_output(pin):
-    gpio.setmode(gpio.BOARD)
+    gpio.setmode(gpio.BCM)
     gpio.setup(pin, gpio.OUT, initial=gpio.HIGH)
 
-def give_water(pin=16):
+def give_water(pin=23):
     init_output(pin)
     gpio.output(pin, 0)
     time.sleep(1)
@@ -79,7 +79,7 @@ def get_moisture_level_from_log():
         print("Failed to extract moisture level from log")
         pass
 
-def set_moisture_threshold(level=525):
+def set_moisture_threshold(level=40000):
     with open('/home/pi/moisture_threshold.txt', 'w+') as file:
         file.write(f'{level}')
     return level
@@ -90,5 +90,5 @@ def get_moisture_threshold():
         threshold = float(file.readlines()[-1])
         file.close()
     except:
-        threshold = 525
+        threshold = 40000
     return threshold
