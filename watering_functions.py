@@ -59,10 +59,9 @@ def check_reservoir_empty():
             pass
     return empty
 
-def get_moisture_level_from_sensor(port):
+def get_moisture_level_from_sensor(chan):
     try:
-        line = port.readline()
-        value = float(line[-6:-2])
+        value = chan.value
         with open('/home/pi/latest_moisture_level.txt', 'a') as file:
             file.write(f'{datetime.now().strftime("%A %d %B %Y at %H:%M:%S")}: {value} \n')
     except:
