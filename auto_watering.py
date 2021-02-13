@@ -27,7 +27,7 @@ def main():
         except FileNotFoundError:
             threshold = watering_functions.set_moisture_threshold()
         if math.floor(elapsed%30) == 0:
-            watering_functions.get_moisture_level_from_sensor(chan)
+            watering_functions.write_moisture_to_sqlite(chan)
 
         time.sleep(.750) # for stabilizing readings from ADC
 

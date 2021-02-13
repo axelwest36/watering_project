@@ -7,25 +7,61 @@ import time
 import serial
 import smtplib
 import ssl
+import sqlite3
 
 
 def init_output(pin):
     gpio.setmode(gpio.BCM)
     gpio.setup(pin, gpio.OUT, initial=gpio.HIGH)
 
+def write_moisture_to_sqlite(chan):
+    conn = sqlite3.connect('moisture_sensor_data.db')
+    c = conn.cursor()
+    try:
+        moisture_value = (chan.value,)
+    except:
+        print('Failed to extract moisture level from sensor')
+        moisture_value = (000,)
+    c.execute("""
+        INSERT INTO moisture_data (moisture, currentdate, currenttime, device) 
+        VALUES (?, date('now'), time('now'), 'write_moisture_to_sqlite_function')
+        """, moisture_value)
+    conn.commit()
+    conn.close()
+
+def write_water_to_sqlite():
+    conn = sqlite3.connect('moisture_sensor_data.db')
+    c = conn.cursor()
+    c.execute("""
+    INSERT INTO last_watered (date, time)
+    VALUES (date('now'), time('now'))
+    """)
+    conn.commit()
+    conn.close()
+
 def give_water(pin=23):
     init_output(pin)
     gpio.output(pin, 0)
     time.sleep(1)
     gpio.output(pin, 1)
-    with open('/home/pi/last_watered_log.txt', 'a') as file:
-        file.write(f'Last watered on: {datetime.now().strftime("%A %d %B %Y at %H:%M:%S")} \n')
+    write_water_to_sqlite()
+
 
 def get_last_watered():
-    file = open('/home/pi/last_watered_log.txt', 'r')
-    log = file.readlines()
-    file.close()
-    return log[-1]
+    conn = sqlite3.connect('moisture_sensor_data.db')
+    c = conn.cursor()
+    c.execute("""
+    SELECT * FROM last_watered ORDER BY date, time DESC LIMIT 1;
+    """)
+    last_watered = " ".join(c.fetchone())
+    conn.close()
+    return last_watered
+
+# def get_last_watered():
+#     file = open('/home/pi/last_watered_log.txt', 'r')
+#     log = file.readlines()
+#     file.close()
+#     return log[-1]
 
 def send_reminder():
     port = 465
@@ -45,6 +81,7 @@ def send_reminder():
         """
         server.sendmail(sender_email, receiver_email, message)
 
+# update this function for compatibility with database
 def check_reservoir_empty():
     empty = False
     with open('/home/pi/last_watered_log.txt', 'r') as file:
@@ -59,25 +96,25 @@ def check_reservoir_empty():
             pass
     return empty
 
-def get_moisture_level_from_sensor(chan):
-    try:
-        value = chan.value
-        with open('/home/pi/latest_moisture_level.txt', 'a') as file:
-            file.write(f'{datetime.now().strftime("%A %d %B %Y at %H:%M:%S")}: {value} \n')
-    except:
-        print('Failed to extract moisture level from sensor')
-        with open('/home/pi/latest_moisture_level.txt', 'a') as file:
-            file.write('000 \n')
+# def get_moisture_level_from_sensor(chan):
+#     try:
+#         value = chan.value
+#         with open('/home/pi/latest_moisture_level.txt', 'a') as file:
+#             file.write(f'{datetime.now().strftime("%A %d %B %Y at %H:%M:%S")}: {value} \n')
+#     except:
+#         print('Failed to extract moisture level from sensor')
+#         with open('/home/pi/latest_moisture_level.txt', 'a') as file:
+#             file.write('000 \n')
 
-def get_moisture_level_from_log():
-    try:
-        file = open('/home/pi/latest_moisture_level.txt', 'r')
-        moisture_level = float(file.readlines()[-1][-8:-2])
-        file.close()
-        return moisture_level
-    except:
-        print("Failed to extract moisture level from log")
-        pass
+# def get_moisture_level_from_log():
+#     try:
+#         file = open('/home/pi/latest_moisture_level.txt', 'r')
+#         moisture_level = float(file.readlines()[-1][-8:-2])
+#         file.close()
+#         return moisture_level
+#     except:
+#         print("Failed to extract moisture level from log")
+#         pass
 
 def set_moisture_threshold(level=40000):
     with open('/home/pi/moisture_threshold.txt', 'w+') as file:
