@@ -24,7 +24,7 @@ def write_moisture_to_sqlite(chan):
         moisture_value = (000,)
     c.execute("""
         INSERT INTO moisture_data (moisture, currentdate, currenttime, device) 
-        VALUES (?, date('now'), time('now'), 'write_moisture_to_sqlite_function')
+        VALUES (?, date('now', 'localtime'), time('now', 'localtime'), 'write_moisture_to_sqlite_function')
         """, moisture_value)
     conn.commit()
     conn.close()
@@ -34,7 +34,7 @@ def write_water_to_sqlite():
     c = conn.cursor()
     c.execute("""
     INSERT INTO last_watered (date, time)
-    VALUES (date('now'), time('now'))
+    VALUES (date('now', 'localtime'), time('now', 'localtime'))
     """)
     conn.commit()
     conn.close()
@@ -64,7 +64,7 @@ def get_moisture_level():
     c.execute("""
     SELECT moisture FROM moisture_data ORDER BY currentdate DESC, currenttime DESC LIMIT 1;
     """)
-    latest_moisture = str(c.fetchone())
+    latest_moisture = " ".join(str(c.fetchone()))
     conn.close()
     return latest_moisture
 
