@@ -15,7 +15,7 @@ def init_output(pin):
     gpio.setup(pin, gpio.OUT, initial=gpio.HIGH)
 
 def write_moisture_to_sqlite(chan):
-    conn = sqlite3.connect('moisture_sensor_data.db')
+    conn = sqlite3.connect('/home/pi/watering_project/moisture_sensor_data.db')
     c = conn.cursor()
     try:
         moisture_value = (chan.value,)
@@ -30,7 +30,7 @@ def write_moisture_to_sqlite(chan):
     conn.close()
 
 def write_water_to_sqlite():
-    conn = sqlite3.connect('moisture_sensor_data.db')
+    conn = sqlite3.connect('/home/pi/watering_project/moisture_sensor_data.db')
     c = conn.cursor()
     c.execute("""
     INSERT INTO last_watered (date, time)
@@ -48,7 +48,7 @@ def give_water(pin=23):
 
 
 def get_last_watered():
-    conn = sqlite3.connect('moisture_sensor_data.db')
+    conn = sqlite3.connect('/home/pi/watering_project/moisture_sensor_data.db')
     c = conn.cursor()
     c.execute("""
     SELECT * FROM last_watered ORDER BY date, time DESC LIMIT 1;
