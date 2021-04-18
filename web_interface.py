@@ -23,7 +23,8 @@ def index():
 @app.route('/last_watered')
 def check_last_watered():
     last_watered = watering_functions.get_last_watered()
-    templateData = template(text=last_watered)
+    message = f"Last watered on: {last_watered}"
+    templateData = template(text=message)
     return render_template('index.html', **templateData)
 
 @app.route('/reservoir_empty')
