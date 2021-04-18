@@ -64,7 +64,7 @@ def get_moisture_level():
     c.execute("""
     SELECT moisture FROM moisture_data ORDER BY currentdate DESC, currenttime DESC LIMIT 1;
     """)
-    latest_moisture = " ".join(c.fetchone()[0])
+    latest_moisture = str(c.fetchone()[0])
     conn.close()
     return latest_moisture
 
