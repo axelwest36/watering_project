@@ -51,11 +51,22 @@ def get_last_watered():
     conn = sqlite3.connect('/home/pi/watering_project/moisture_sensor_data.db')
     c = conn.cursor()
     c.execute("""
-    SELECT * FROM last_watered ORDER BY date, time DESC LIMIT 1;
+    SELECT * FROM last_watered ORDER BY date DESC, time DESC LIMIT 1;
     """)
     last_watered = " ".join(c.fetchone())
     conn.close()
     return last_watered
+
+
+def get_moisture_level():
+    conn = sqlite3.connect('/home/pi/watering_project/moisture_sensor_data.db')
+    c = conn.cursor()
+    c.execute("""
+    SELECT moisture FROM moisture_data ORDER BY currentdate DESC, currenttime DESC LIMIT 1;
+    """)
+    latest_moisture = " ".join(c.fetchone())
+    conn.close()
+    return latest_moisture
 
 # def get_last_watered():
 #     file = open('/home/pi/last_watered_log.txt', 'r')
