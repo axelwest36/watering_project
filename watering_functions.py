@@ -8,6 +8,7 @@ import serial
 import smtplib
 import ssl
 import sqlite3
+import pandas as pd 
 
 
 def init_output(pin):
@@ -140,3 +141,19 @@ def get_moisture_threshold():
     except:
         threshold = 40000
     return threshold
+
+def generate_moisture_graph():
+    conn = sqlite3.connect('/home/pi/moisture_sensor_data.db')
+
+    query = """
+            SELECT moisture, currentdate, currenttime FROM moisture_data
+            ORDER BY currentdate DESC, currenttime DESC LIMIT 10000;
+            """
+
+    df = pd.read_sql_query(query, conn)
+
+    df['timestamp'] = df.apply(lambda row: datetime.strptime(row['currentdate'] + " " + row['currenttime'], "%Y-%m-%d %H:%M:%S"), axis=1)
+
+    fig = df.plot(x='timestamp', y='moisture').get_figure()
+    fig.savefig('/home/pi/recent_moisture_data.png')
+    conn.close()

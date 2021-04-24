@@ -18,6 +18,7 @@ def template(title="", text=""):
 @app.route('/')
 def index():
     templateData = template(title='Current time is')
+    watering_functions.generate_moisture_graph()
     return render_template('index.html', **templateData)
 
 @app.route('/last_watered')
@@ -25,6 +26,7 @@ def check_last_watered():
     last_watered = watering_functions.get_last_watered()
     message = f"Last watered on: {last_watered}"
     templateData = template(text=message)
+    watering_functions.generate_moisture_graph()
     return render_template('index.html', **templateData)
 
 @app.route('/reservoir_empty')
