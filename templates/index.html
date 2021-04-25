@@ -29,9 +29,7 @@
     <h4 style="text-align: center"> {{ text }} </h2> <br><br>
 </div>
 <div class="image">
-  <body>
-    <img src="/home/pi/recent_moisture_data.png"> <br><br>
-  </body>
+    <img src="{{ url_for('static', filename='recent_moisture_data.png') }}" align="middle"> <br><br>
 </div>
 <div class="container">
     <div class="center">

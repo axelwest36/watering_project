@@ -157,5 +157,5 @@ def generate_moisture_graph():
     df['timestamp'] = df.apply(lambda row: datetime.strptime(row['currentdate'] + " " + row['currenttime'], "%Y-%m-%d %H:%M:%S"), axis=1)
 
     fig = df.plot(x='timestamp', y='moisture').get_figure()
-    fig.savefig('/home/pi/recent_moisture_data.png')
+    fig.savefig('/home/pi/watering_project/static/recent_moisture_data.png')
     conn.close()
