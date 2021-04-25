@@ -9,6 +9,8 @@ import smtplib
 import ssl
 import sqlite3
 import pandas as pd 
+import matplotlib
+matplotlib.use('Agg')
 
 
 def init_output(pin):

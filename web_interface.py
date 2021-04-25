@@ -2,6 +2,8 @@ from flask import Flask, render_template, url_for, request, redirect
 from datetime import datetime
 import watering_functions
 import os
+import matplotlib
+matplotlib.use('Agg')
 
 # Initializes flask based on the name of the file
 app = Flask(__name__)
