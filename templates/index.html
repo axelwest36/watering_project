@@ -8,31 +8,31 @@
 {% block body %}
 <style>
 .container { 
-  height: 200px;
+  height: 250px;
   position: relative; 
 }
 
 .center {
+  text-align: center;
   margin: 0;
   position: absolute;
   top: 50%;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); 
+  justify-content: center;  
+  align-items: center;  
 }
 </style>
 
 <div class="content">
+  <div class="center">
+    <div class="container">
     <br><br>
     <h1 style="text-align: center">Automatic plant watering system</h1><br><br>
     <h4 style="text-align: center">Server accessed on: {{ time }}</h2><br><br>
     <h4 style="text-align: center"> {{ text }} </h2> <br><br>
-</div>
-<div class="image">
-    <img src="{{ url_for('static', filename='recent_moisture_data.png') }}" align="middle"> <br><br>
-</div>
-<div class="container">
-    <div class="center">
+    </div>
       <a href="/moisture_level"><button>Check moisture level</button></a> <br>
       <a href="/water_plant"><button>Give water</button></a> <br>
       <a href="/last_watered"><button>Check last water time</button></a> <br>
@@ -45,6 +45,7 @@
           <input type="text" id="moisture_threshold" name="moisture_threshold"><br>
           <input type="submit" value="Update moisture threshold"><br>
       </form>
+      <img src="{{ url_for('static', filename='recent_moisture_data.png') }}"> <br><br>
     </div>
   </div>
 {% endblock %}
